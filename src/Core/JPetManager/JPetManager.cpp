@@ -16,7 +16,6 @@
 #include "JPetTaskChainExecutor/JPetTaskChainExecutor.h"
 #include "JPetOptionsGenerator/JPetOptionsGenerator.h"
 #include "JPetGeantParser/JPetGeantParser.h"
-#include "JPetGeantParser/JPetGeantParser.h"
 #include "JPetCommonTools/JPetCommonTools.h"
 #include "JPetCmdParser/JPetCmdParser.h"
 #include "JPetManager/JPetManager.h"
@@ -46,6 +45,8 @@ void JPetManager::run(int argc, const char** argv) {
     std::cerr << "Error has occurred while parsing command line! Check the log!" << std::endl;
     throw std::invalid_argument("Error in parsing command line arguments"); /// temporary change to check if the examples are working
   }
+
+  registerDefaultTasks();
 
   auto chainOfTasks = fTaskFactory.createTaskGeneratorChain(allValidatedOptions);
   JPetOptionsGenerator optionsGenerator;
@@ -112,4 +113,12 @@ bool JPetManager::areThreadsEnabled() const { return fThreadsEnabled; }
 void JPetManager::setThreadsEnabled(bool enable) {
   fThreadsEnabled = enable;
   ENABLE_THREADS_INFO(enable);
+}
+
+/// @brief Adds any built-in tasks based on JPetTaskIO to the map of taska generators to facilitate their later generation on demand
+///
+/// Any built-in tasks which are handled by JPetTaskIO the same way as user-defined tasks (rather than using a dedicated task wrapper as is the case for JPetUnzipAndUpackTask or JPetParamBankHandlerTask) can be easily added to the chain of tasks using the same mehanics as exposed to the user for adding users' tasks prvided that the built-in tasks are registered in the map of tasks generators in advance. This provate method is intended to register all such tasks in advance of creation of the task generator chain.
+void JPetManager::registerDefaultTasks()
+{
+  registerTask<JPetGeantParser>("JPetGeantParser");
 }

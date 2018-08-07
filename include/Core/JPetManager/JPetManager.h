@@ -99,6 +99,7 @@ private:
   JPetManager();
   JPetManager(const JPetManager&);
   void operator=(const JPetManager&);
+  void registerDefaultTasks();
   bool fThreadsEnabled = false;
   jpet_task_factory::JPetTaskFactory fTaskFactory;
 };
