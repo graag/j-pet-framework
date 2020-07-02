@@ -253,6 +253,23 @@ BOOST_AUTO_TEST_CASE(getDetectorTypeTest)
   BOOST_REQUIRE_EQUAL(DetectorTypeChecker::getDetectorType(opt4), DetectorTypeChecker::DetectorType::kModular);
   BOOST_REQUIRE_EQUAL(DetectorTypeChecker::getDetectorType(opt5), DetectorTypeChecker::DetectorType::kBarrel);
   BOOST_REQUIRE_EQUAL(DetectorTypeChecker::getDetectorType(opt6), DetectorTypeChecker::DetectorType::kBarrel);
+
+BOOST_AUTO_TEST_CASE(testBooleanOptions)
+{
+  OptsStrAny options1 = {};
+
+  BOOST_REQUIRE_EQUAL(isProgressBar(options1), false);
+  BOOST_REQUIRE_EQUAL(isDirectProcessing(options1), false);
+
+  OptsStrAny options2 = {{"progressBar_bool", false}, {"directProcessing_bool", false}};
+
+  BOOST_REQUIRE_EQUAL(isProgressBar(options2), false);
+  BOOST_REQUIRE_EQUAL(isDirectProcessing(options2), false);
+
+  OptsStrAny options3 = {{"progressBar_bool", true}, {"directProcessing_bool", true}};
+
+  BOOST_REQUIRE_EQUAL(isProgressBar(options3), true);
+  BOOST_REQUIRE_EQUAL(isDirectProcessing(options3), true);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

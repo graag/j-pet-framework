@@ -206,6 +206,15 @@ namespace jpet_options_tools
     return any_cast<int>(opts.at("runID_int"));
   }
 
+  bool isDirectProcessing(const std::map<std::string, boost::any>& opts)
+  {
+    if (opts.find("directProcessing_bool") != opts.end())
+    {
+      return any_cast<bool>(opts.at("directProcessing_bool"));
+    }
+    return false;
+  }
+
   bool isProgressBar(const std::map<std::string, boost::any>& opts)
   {
     return any_cast<bool>(opts.at("progressBar_bool"));
