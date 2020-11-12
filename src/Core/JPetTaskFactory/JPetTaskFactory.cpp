@@ -13,16 +13,16 @@
  *  @file JPetTaskFactory.cpp
  */
 
-#include "JPetParamBankHandlerTask/JPetParamBankHandlerTask.h"
 #include "JPetTaskFactory/JPetTaskFactory.h"
-#include "JPetScopeLoader/JPetScopeLoader.h"
 #include "JPetGeantParser/JPetGeantParser.h"
+#include "JPetOptionsTools/JPetOptionsTools.h"
+#include "JPetParamBankHandlerTask/JPetParamBankHandlerTask.h"
+#include "JPetScopeLoader/JPetScopeLoader.h"
+#include "JPetTaskIOLoopPerSubTask/JPetTaskIOLoopPerSubTask.h"
 #include "JPetTaskLooper/JPetTaskLooper.h"
+#include "JPetTaskStreamIO/JPetTaskStreamIO.h"
 #include "JPetUnpackTask/JPetUnpackTask.h"
 #include "JPetUnzipTask/JPetUnzipTask.h"
-#include "JPetTaskIO/JPetTaskIO.h"
-#include "JPetTaskStreamIO/JPetTaskStreamIO.h"
-#include "JPetOptionsTools/JPetOptionsTools.h"
 
 using TaskGenerator = std::function<std::unique_ptr<JPetTaskInterface>()>;
 using TaskGeneratorChain = std::vector<TaskGenerator>;
@@ -189,7 +189,7 @@ void addTaskToChain(
     if (numOfIterations == 1) {
       outChain.push_back(
         [name, inT, outT, userTaskGen]() {
-          auto task = jpet_common_tools::make_unique<JPetTaskIO>(
+          auto task = std::make_unique<JPetTaskIOLoopPerSubTask>(
             name.c_str(), inT.c_str(), outT.c_str()
           );
           task->addSubTask(std::unique_ptr<JPetTaskInterface>(userTaskGen()));
@@ -200,7 +200,7 @@ void addTaskToChain(
       if (numOfIterations < 0) {
         outChain.push_back(
         [name, inT, outT, userTaskGen]() {
-          auto task = jpet_common_tools::make_unique<JPetTaskIO>(name.c_str(), inT.c_str(), outT.c_str());
+          auto task = std::make_unique<JPetTaskIOLoopPerSubTask>(name.c_str(), inT.c_str(), outT.c_str());
           task->addSubTask(std::unique_ptr<JPetTaskInterface>(userTaskGen()));
           auto looperTask = jpet_common_tools::make_unique<JPetTaskLooper>(
             name.c_str(), std::move(task), JPetTaskLooper::getStopOnOptionPredicate(kStopIterationOptionName)
@@ -209,7 +209,7 @@ void addTaskToChain(
         });
       } else {
         outChain.push_back([name, inT, outT, numOfIterations, userTaskGen]() {
-          auto task = jpet_common_tools::make_unique<JPetTaskIO>(
+          auto task = std::make_unique<JPetTaskIOLoopPerSubTask>(
             name.c_str(), inT.c_str(), outT.c_str()
           );
           task->addSubTask(std::unique_ptr<JPetTaskInterface>(userTaskGen()));
