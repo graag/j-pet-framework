@@ -195,6 +195,8 @@ void JPetGeantParser::loadSmearingOptionsAndSetupExperimentalParametrizer()
   }
 
   fExperimentalParametrizer.setSmearingFunctionLimits(limits);
+
+  fExperimentalParametrizer.setShouldUseDefaultSmearing(fUseDefaultZSmearing, fUseDefaultTimeSmearing, fUseDefaultEnergySmearing);
 }
 
 bool JPetGeantParser::exec()
