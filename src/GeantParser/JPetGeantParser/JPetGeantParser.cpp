@@ -149,17 +149,17 @@ void JPetGeantParser::loadSmearingOptionsAndSetupExperimentalParametrizer()
 
   if (isOptionSet(fParams.getOptions(), kUseDefaultZSmearingKey))
   {
-    fUseDefaultZSmearing = getOptionAsDouble(fParams.getOptions(), kUseDefaultZSmearingKey);
+    fUseDefaultZSmearing = getOptionAsBool(fParams.getOptions(), kUseDefaultZSmearingKey);
   }
 
   if (isOptionSet(fParams.getOptions(), kUseDefaultTimeSmearingKey))
   {
-    fUseDefaultTimeSmearing = getOptionAsDouble(fParams.getOptions(), kUseDefaultTimeSmearingKey);
+    fUseDefaultTimeSmearing = getOptionAsBool(fParams.getOptions(), kUseDefaultTimeSmearingKey);
   }
 
   if (isOptionSet(fParams.getOptions(), kUseDefaultEnergySmearingKey))
   {
-    fUseDefaultEnergySmearing = getOptionAsDouble(fParams.getOptions(), kUseDefaultEnergySmearingKey);
+    fUseDefaultEnergySmearing = getOptionAsBool(fParams.getOptions(), kUseDefaultEnergySmearingKey);
   }
   
   if (isOptionSet(fParams.getOptions(), kDefaultZSmearingSigmaKey))
