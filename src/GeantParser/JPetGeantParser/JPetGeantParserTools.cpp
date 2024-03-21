@@ -41,6 +41,7 @@ JPetHit JPetGeantParserTools::reconstructHit(JPetMCHit& mcHit, const JPetParamBa
   auto posZ = mcHit.getPosZ();
   auto energy = mcHit.getEnergy();
   auto time = mcHit.getTime() + timeShift;
+  mcHit.setTime(time);
 
   hit.setEnergy(parametrizer.addEnergySmearing(scinID, posZ, energy, time));
   // adjust to time window and smear
