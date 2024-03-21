@@ -13,8 +13,8 @@
  *  @file JPetParamGetterAscii.cpp
  */
 
-#include "JPetParamGetterAscii/JPetParamAsciiConstants.h"
 #include "JPetParamGetterAscii/JPetParamGetterAscii.h"
+#include "JPetParamGetterAscii/JPetParamAsciiConstants.h"
 #include <boost/property_tree/json_parser.hpp>
 #include "JPetParamBank/JPetParamBank.h"
 #include <boost/lexical_cast.hpp>
